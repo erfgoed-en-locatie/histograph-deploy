@@ -29,10 +29,9 @@ RUN   echo 'deb http://debian.neo4j.org/repo stable/' > /etc/apt/sources.list.d/
 RUN   apt-get update -y # Find out about the files in our repository
 RUN   apt-get install -y neo4j # Install Neo4j, community edition
 
-# Setup neo4j Gremlin Server
-RUN   /tinkerpop3-3.0.0.M7/gremlin-server/bin/gremlin-server.sh -i com.tinkerpop neo4j-gremlin 3.0.0.M7
-RUN   /tinkerpop3-3.0.0.M7/gremlin-server/bin/gremlin-server.sh /tinkerpop3-3.0.0.M7/gremlin-server/conf/gremlin-server-neo4j.yaml
-
 # Install redis
 RUN   apt-get install -y redis-server
 
+# Setup neo4j Gremlin Server
+RUN   /tinkerpop3-3.0.0.M7/gremlin-server/bin/gremlin-server.sh -i com.tinkerpop neo4j-gremlin 3.0.0.M7
+RUN   /tinkerpop3-3.0.0.M7/gremlin-server/bin/gremlin-server.sh /tinkerpop3-3.0.0.M7/gremlin-server/conf/gremlin-server-neo4j.yaml
