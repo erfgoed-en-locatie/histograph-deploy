@@ -19,7 +19,7 @@ RUN     apt-get install -y maven
 
 # Clone config repo and set environment variable
 RUN     git clone https://github.com/histograph/config
-RUN     export HISTOGRAPH_CONFIG='./config/histograph.json'
+RUN     export HISTOGRAPH_CONFIG='/opt/histograph/config/histograph.json'
 
 # Clone and install histograph core
 RUN     apt-get install -y git
