@@ -2,7 +2,7 @@
 Deploy scripts for Histograph
 
 ## Usage
-### Debian/Ubuntu
+### Debian/Ubuntu, possibly many other linux or even posix (Mac?)
 Install docker through the main repository
 ```
 apt-get install docker
@@ -10,7 +10,7 @@ apt-get install docker
 Set up SSH key for Github, if you haven't already. This is necessary to be able to clone the private data repository
 ```
 ssh-keygen -t rsa -C "your_email@example.com"
-ssh-agent -s
+eval $(ssh-agent -s)
 ssh-add ~/.ssh/id_rsa
 clip < ~/.ssh/id_rsa.pub
 ```
@@ -33,7 +33,7 @@ Open the connection and provide the following credentials:
 - user: docker
 - pass: tcuser
 
-Then set up the SSH key for Github. This is necessary to be able to clone the private data repository. In putty, type the following (make sure to insert your own mail adress).
+Then set up the SSH key for Github. This is necessary to be able to clone the private data repository. In putty, type the following (make sure to insert your own mail adress). Make sure NOT to provide a passphrase, otherwise the procedure will fail.
 ```
 ssh-keygen -t rsa -C "your_email@example.com"
 eval $(ssh-agent -s)
