@@ -33,7 +33,7 @@ Open the connection and provide the following credentials:
 - user: docker
 - pass: tcuser
 
-Then set up the SSH key for Github. This is necessary to be able to clone the private data repository. In putty, type the following (make sure to insert your own mail adress).
+Then set up the SSH key for Github. This is necessary to be able to clone the private data repository. In putty, type the following (make sure to insert your own mail adress). Make sure NOT to provide a passphrase, otherwise the procedure will fail.
 ```
 ssh-keygen -t rsa -C "your_email@example.com"
 eval $(ssh-agent -s)
