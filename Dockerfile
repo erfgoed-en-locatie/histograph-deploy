@@ -32,6 +32,7 @@ WORKDIR /
 # Clone and run histograph i/o repo
 RUN     git clone https://github.com/histograph/io
 WORKDIR /io
+RUN     npm install
 RUN     node index.js &
 
 # Clone data sets for ingestion
@@ -41,4 +42,6 @@ RUN     /historische-geocoder/histograph-preprocessor.sh
 
 # Clone importer
 RUN     git clone https://github.com/histograph/import
-RUN     node import/index.js
+WORKDIR /import
+RUN     npm install
+RUN     node index.js
