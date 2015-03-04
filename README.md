@@ -2,7 +2,7 @@
 Deploy scripts for Histograph
 
 ## Usage
-### Debian/Ubuntu
+### Debian/Ubuntu, possibly many other linux or even posix (Mac?)
 Install docker through the main repository
 ```
 apt-get install docker
@@ -10,7 +10,7 @@ apt-get install docker
 Set up SSH key for Github, if you haven't already. This is necessary to be able to clone the private data repository
 ```
 ssh-keygen -t rsa -C "your_email@example.com"
-ssh-agent -s
+eval $(ssh-agent -s)
 ssh-add ~/.ssh/id_rsa
 clip < ~/.ssh/id_rsa.pub
 ```
