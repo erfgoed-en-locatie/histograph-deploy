@@ -17,12 +17,17 @@ RUN     redis-server &
 # Install Maven
 RUN     apt-get install -y maven
 
+# Clone config repo and set environment variable
+RUN     git clone https://github.com/histograph/config
+RUN     export HISTOGRAPH_CONFIG='./config/histograph.json'
+
 # Clone and install histograph core
 RUN     apt-get install -y git
 RUN     git clone https://github.com/histograph/core
 WORKDIR /core
 RUN     mvn clean install
 RUN     bin/histograph-core.sh &
+WORKDIR /
 
 # Clone and run histograph i/o repo
 RUN     git clone https://github.com/histograph/io
