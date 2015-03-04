@@ -6,18 +6,25 @@ RUN     apt-get update && apt-get install -y curl apt-utils openjdk-7-jdk apache
 RUN     curl -sL https://deb.nodesource.com/setup | bash -
 RUN     apt-get install -y nodejs
 # Start redis
-RUN     redis-server &
+RUN 	echo "daemonize yes" > redis.conf
+RUN     redis-server redis.conf
 
 # Clone config repo and set environment variable
 RUN     apt-get install -y git
 RUN     git clone https://github.com/histograph/config
-RUN     export HISTOGRAPH_CONFIG='/config/histograph.json'
+ENV     HISTOGRAPH_CONFIG /config/histograph.json
+RUN	ls /usr/lib/jvm
 
 # Clone and install histograph core
 RUN     git clone https://github.com/histograph/core
 WORKDIR /core
 RUN     mvn clean install
-RUN     bin/histograph-core.sh &
+RUN	java -version
+RUN	mvn -v
+RUN	javac -version
+ENV	JAVA_HOME /usr/lib/jvm/java-7-openjdk-amd64
+RUN     bin/histograph-core.sh
+RUN	sleep 10
 WORKDIR /
 
 # Clone and run API
@@ -46,7 +53,10 @@ RUN     ssh-keyscan github.com >> /root/.ssh/known_hosts
 # Clone data sets for ingestion
 
 RUN	    git clone git@github.com:erfgoed-en-locatie/historische-geocoder
-RUN     /historische-geocoder/histograph-preprocessor.sh
+WORKDIR	/historische-geocoder
+RUN	npm install
+RUN     ./histograph-preprocessor.sh
+WORKDIR /
 
 # Clone and run histograph i/o repo
 RUN     git clone https://github.com/histograph/io
@@ -56,6 +66,7 @@ WORKDIR /io/layers
 RUN     mkdir atlas-verstedelijking bag carnaval dbpedia gemeentegeschiedenis geonames gewesten militieregisters osm pleiades poorterboeken simon-hart tgn verdwenen-dorpen voc-opvarenden
 RUN     npm install
 RUN     node index.js &
+RUN	sleep 10
 WORKDIR /
 
 # Clone importer
