@@ -1,7 +1,8 @@
 FROM    debian:wheezy
 # Install basic dependencies
-RUN     apt-get update && apt-get install -y curl apt-utils openjdk-7-jdk apache2 redis-server maven git
+RUN     apt-get update && apt-get install -y curl apt-utils openjdk-7-jdk apache2 redis-server maven git build-essential
 # Install nodejs and npm
+
 RUN     curl -sL https://deb.nodesource.com/setup | bash -
 RUN     apt-get install -y nodejs
 # Start redis
@@ -28,14 +29,15 @@ RUN     forever index.js &
 WORKDIR /
 
 # Make ssh dir
-RUN mkdir /root/.ssh/
+RUN mkdir -p /root/.ssh/
 
 # Copy over private key, and set permissions
 RUN     echo '\nIf the build fails here, that means that the key authentication for a privat github repository failed.'
 RUN     echo 'Please set up key authentication for github as listed on https://help.github.com/articles/generating-ssh-keys/'
 RUN     echo 'and make sure the path to the file is listed correctly in the dockerfile.'
 ADD     id_rsa /root/.ssh/id_rsa
-RUN chmod 700 /root/.ssh/id_rsa
+
+RUN 	chmod 700 /root/.ssh/id_rsa
 RUN echo "Host github.com\n\tStrictHostKeyChecking no\n" >> /root/.ssh/config
 
 # Create known_hosts
@@ -43,7 +45,8 @@ RUN     touch /root/.ssh/known_hosts
 # Add github key
 RUN     ssh-keyscan github.com >> /root/.ssh/known_hosts
 # Clone data sets for ingestion
-RUN     git clone git@github.com:erfgoed-en-locatie/historische-geocoder
+
+RUN	git clone git@github.com:erfgoed-en-locatie/historische-geocoder
 RUN     /historische-geocoder/histograph-preprocessor.sh
 
 # Clone and run histograph i/o repo
