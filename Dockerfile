@@ -1,28 +1,18 @@
 FROM    debian:wheezy
-# Install Node.js and npm
-RUN     apt-get update && apt-get install -y curl apt-utils
+# Install basic dependencies
+RUN     apt-get update && apt-get install -y curl apt-utils openjdk-7-jdk apache2 redis-server maven git
+# Install nodejs and npm
 RUN     curl -sL https://deb.nodesource.com/setup | bash -
 RUN     apt-get install -y nodejs
-
-# Install Java 7 jdk
-RUN     apt-get install -y openjdk-7-jdk
-
-# Install apache web server
-RUN     apt-get install -y apache2
-
-# Install redis
-RUN     apt-get install -y redis-server
+# Start redis
 RUN     redis-server &
 
-# Install Maven
-RUN     apt-get install -y maven
-
 # Clone config repo and set environment variable
+RUN     apt-get install -y git
 RUN     git clone https://github.com/histograph/config
 RUN     export HISTOGRAPH_CONFIG='/opt/histograph/config/histograph.json'
 
 # Clone and install histograph core
-RUN     apt-get install -y git
 RUN     git clone https://github.com/histograph/core
 WORKDIR /core
 RUN     mvn clean install
@@ -46,9 +36,9 @@ RUN     echo 'If the build fails here, that means that the key authentication fo
 RUN     echo 'Please set up key authentication for github and make sure the path to the file is listed correctly in the dockerfile.'
 
 # Create known_hosts
-RUN touch /root/.ssh/known_hosts
+RUN     touch /root/.ssh/known_hosts
 # Add bitbuckets key
-RUN ssh-keyscan github.com >> /root/.ssh/known_hosts
+RUN     ssh-keyscan github.com >> /root/.ssh/known_hosts
 # Clone data sets for ingestion
 RUN     git clone git@github.com:erfgoed-en-locatie/historische-geocoder
 RUN     /historische-geocoder/histograph-preprocessor.sh
