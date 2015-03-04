@@ -31,7 +31,8 @@ WORKDIR /
 
 # Clone and run histograph i/o repo
 RUN     git clone https://github.com/histograph/io
-RUN     node io/index.js 
+WORKDIR /io
+RUN     node index.js &
 
 # Clone data sets for ingestion
 WORKDIR /
