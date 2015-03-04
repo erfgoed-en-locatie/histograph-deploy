@@ -11,7 +11,7 @@ RUN     redis-server &
 # Clone config repo and set environment variable
 RUN     apt-get install -y git
 RUN     git clone https://github.com/histograph/config
-RUN     export HISTOGRAPH_CONFIG='/opt/histograph/config/histograph.json'
+RUN     export HISTOGRAPH_CONFIG='/config/histograph.json'
 
 # Clone and install histograph core
 RUN     git clone https://github.com/histograph/core
@@ -36,7 +36,6 @@ RUN     echo '\nIf the build fails here, that means that the key authentication 
 RUN     echo 'Please set up key authentication for github as listed on https://help.github.com/articles/generating-ssh-keys/'
 RUN     echo 'and make sure the path to the file is listed correctly in the dockerfile.'
 ADD     id_rsa /root/.ssh/id_rsa
-
 RUN 	chmod 700 /root/.ssh/id_rsa
 RUN echo "Host github.com\n\tStrictHostKeyChecking no\n" >> /root/.ssh/config
 
@@ -46,7 +45,7 @@ RUN     touch /root/.ssh/known_hosts
 RUN     ssh-keyscan github.com >> /root/.ssh/known_hosts
 # Clone data sets for ingestion
 
-RUN	git clone git@github.com:erfgoed-en-locatie/historische-geocoder
+RUN	    git clone git@github.com:erfgoed-en-locatie/historische-geocoder
 RUN     /historische-geocoder/histograph-preprocessor.sh
 
 # Clone and run histograph i/o repo
