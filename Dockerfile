@@ -29,16 +29,27 @@ RUN     mvn clean install
 RUN     bin/histograph-core.sh &
 WORKDIR /
 
-# Clone and run histograph i/o repo
-RUN     git clone https://github.com/histograph/io
-WORKDIR /io
+# Clone and run API
+RUN     git clone https://github.com/histograph/api
+WORKDIR /api
+RUN     npm install -g forever
 RUN     npm install
-RUN     node index.js &
+RUN     forever index.js &
 
 # Clone data sets for ingestion
 WORKDIR /
 RUN     git clone https://github.com/erfgoed-en-locatie/historische-geocoder
 RUN     /historische-geocoder/histograph-preprocessor.sh
+
+# Clone and run histograph i/o repo
+RUN     git clone https://github.com/histograph/io
+WORKDIR /io
+RUN     mkdir layers
+WORKDIR /io/layers
+RUN     mkdir atlas-verstedelijking bag carnaval dbpedia gemeentegeschiedenis geonames gewesten militieregisters osm pleiades poorterboeken simon-hart tgn verdwenen-dorpen voc-opvarenden
+RUN     npm install
+RUN     node index.js &
+WORKDIR /
 
 # Clone importer
 RUN     git clone https://github.com/histograph/import
