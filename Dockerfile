@@ -10,13 +10,6 @@ RUN     apt-get install -y openjdk-7-jdk
 # Install apache web server
 RUN     apt-get install -y apache2
 
-# Install neo4j
-RUN     apt-get install -y wget
-RUN     wget -O - http://debian.neo4j.org/neotechnology.gpg.key| apt-key add - # Import our signing key
-RUN     echo 'deb http://debian.neo4j.org/repo stable/' > /etc/apt/sources.list.d/neo4j.list # Create an Apt sources.list file
-RUN     apt-get update -y # Find out about the files in our repository
-RUN     apt-get install -y neo4j # Install Neo4j, community edition
-
 # Install redis
 RUN     apt-get install -y redis-server
 RUN     redis-server &
