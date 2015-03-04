@@ -34,7 +34,7 @@ RUN mkdir /root/.ssh/
 RUN     echo '\nIf the build fails here, that means that the key authentication for a privat github repository failed.'
 RUN     echo 'Please set up key authentication for github as listed on https://help.github.com/articles/generating-ssh-keys/'
 RUN     echo 'and make sure the path to the file is listed correctly in the dockerfile.'
-ADD     ../.ssh/id_rsa /root/.ssh/id_rsa
+ADD     .ssh/id_rsa /root/.ssh/id_rsa
 
 # Create known_hosts
 RUN     touch /root/.ssh/known_hosts
