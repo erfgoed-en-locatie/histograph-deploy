@@ -35,10 +35,22 @@ WORKDIR /api
 RUN     npm install -g forever
 RUN     npm install
 RUN     forever index.js &
-
-# Clone data sets for ingestion
 WORKDIR /
-RUN     git clone https://github.com/erfgoed-en-locatie/historische-geocoder
+
+# Make ssh dir
+RUN mkdir /root/.ssh/
+
+# Copy over private key, and set permissions
+ADD     id_rsa /root/.ssh/id_rsa
+RUN     echo 'If the build fails here, that means that the key authentication for a privat github repository failed.'
+RUN     echo 'Please set up key authentication for github and make sure the path to the file is listed correctly in the dockerfile.'
+
+# Create known_hosts
+RUN touch /root/.ssh/known_hosts
+# Add bitbuckets key
+RUN ssh-keyscan github.com >> /root/.ssh/known_hosts
+# Clone data sets for ingestion
+RUN     git clone git@github.com:erfgoed-en-locatie/historische-geocoder
 RUN     /historische-geocoder/histograph-preprocessor.sh
 
 # Clone and run histograph i/o repo
