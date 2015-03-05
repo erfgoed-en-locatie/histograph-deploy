@@ -61,12 +61,8 @@ WORKDIR /
 # Clone and run histograph i/o repo
 RUN     git clone https://github.com/histograph/io
 WORKDIR /io
-RUN     mkdir layers
-WORKDIR /io/layers
-RUN     mkdir atlas-verstedelijking bag carnaval dbpedia gemeentegeschiedenis geonames gewesten militieregisters osm pleiades poorterboeken simon-hart tgn verdwenen-dorpen voc-opvarenden
 RUN     npm install
 RUN     node index.js &
-RUN	sleep 10
 WORKDIR /
 
 # Clone importer
