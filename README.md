@@ -1,7 +1,18 @@
 # histograph-deploy
-Deploy scripts for Histograph
+Deploy and rebuild/reload scripts for Histograph
 
 ## Usage
+### Shell scripts for rebuilding and reloading
+With an already running server, it is possible to rebuild the components and refresh the data.
+To rebuild everyting:
+```
+./histograph-rebuild.sh
+```
+To refresh the data (this will take a while, depending on your hardware)
+```
+./histograph-reload.sh
+```
+
 ### Debian/Ubuntu, possibly many other linux or even posix (Mac?)
 Install docker through the main repository
 ```
