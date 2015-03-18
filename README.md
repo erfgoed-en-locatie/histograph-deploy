@@ -8,9 +8,14 @@ To rebuild everyting:
 ```
 ./histograph-rebuild.sh
 ```
-To refresh the data (this will take a while, depending on your hardware)
+To reload all source data and rebuild indexes and storage (this will take a while, depending on your hardware)
 ```
 ./histograph-reload.sh
+```
+
+To refresh the indexes and graph:
+```
+./histograph-refresh.sh
 ```
 
 ### Debian/Ubuntu, possibly many other linux or even posix (Mac?)
