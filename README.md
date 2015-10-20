@@ -69,3 +69,5 @@ git clone https://github.com/histograph/deploy
 cd deploy
 docker build .
 ```
+
+Copyright (C) 2015 [Waag Society](http://waag.org).
